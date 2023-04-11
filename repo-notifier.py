@@ -4,12 +4,13 @@ from requests import get, post
 from sys import exit as sysexit
 from time import sleep
 from urllib.parse import quote_plus
+from os import environ
 
 
-BOT_TOKEN = ""
-CHAT_ID = ""
-REPO_LINK = ""
-REPO_NAME = ""
+BOT_TOKEN = environ["BOT_TOKEN"]
+CHAT_ID = environ["CHAT_ID"]
+REPO_LINK = environ["REPO_LINK"]
+REPO_NAME = environ["REPO_NAME"]
 
 
 UPDATE_CHANNEl = "https://api.telegram.org/bot{BOT_TOKEN}/sendMessage?chat_id={CHAT_ID}"
