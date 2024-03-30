@@ -37,14 +37,19 @@ proc sendNoti(newApps: seq[string]): void =
         discard client.postContent(
             fmt"https://api.telegram.org/bot{bot_token}/sendMessage?chat_id={chat_id}" &
                 "&text=" & encodeUrl(&"{app} has been added to the {repo_name}!"))
-        sleep(5000)  # 5 seconds
+        sleep(5000)  # 5 seconds, avoid telegram rate limits
 
 var current: seq[string] = fetchRepo()
+echo "fetched initial data!\n"
 
 while true:
     sleep(120000)  # 2 minutes
     let newApps: seq[string] = collect(newSeq):
         for app in fetchRepo():
             if not current.contains(app): app
+
+    if newApps.len() == 0:
+        echo "no new apps!"
+        continue
 
     sendNoti(newApps)
